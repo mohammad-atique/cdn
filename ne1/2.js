@@ -90,7 +90,7 @@ var cssStyles = `
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1p solid red;
+ 
 }
 
 #chatbot-popup {

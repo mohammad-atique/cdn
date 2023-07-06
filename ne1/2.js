@@ -87,7 +87,6 @@ var cssStyles = `
   padding: 10px;
   cursor: pointer;
   border-radius: 50%;
-  font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;

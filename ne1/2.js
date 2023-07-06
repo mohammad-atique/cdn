@@ -192,9 +192,7 @@ var cssStyles = `
 }
 
 @media (max-width: 600px) {
-  #chatbot-button {
-    font-size: 24px;
-  }
+
 
   #chatbot-header span {
     font-size: 16px;

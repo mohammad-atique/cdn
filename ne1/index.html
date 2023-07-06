@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style>
+        /* Add this code to your website's CSS or use inline styles */
+#chatbot-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+#chatbot-button {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1p solid red;
+}
+
+#chatbot-popup {
+  display: none;
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 300px;
+  height: 400px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+#chatbot-header {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+#chatbot-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+#chatbot-header span {
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+#chatbot-messages {
+  height: 300px;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+#chatbot-input {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+#chatbot-input input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+#chatbot-input span {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+.message-user {
+  background-color: #F5F5F5;
+  color: #333;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.message-bot {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+#chatbot-messages {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+@media (max-width: 600px) {
+  #chatbot-popup {
+    width: 90%;
+    height: 80%;
+    bottom: 10%;
+    right: 5%;
+  }
+}
+    @media (max-width: 600px) {
+  #chatbot-button {
+    font-size: 24px;
+  }
+
+  #chatbot-header span {
+    font-size: 16px;
+  }
+
+  #chatbot-input span {
+    font-size: 16px;
+  }
+}
+
+.dot-elastic {
+  position: relative;
+  width: 4px;
+  height: 4px;
+  left: 2px;
+  border-radius: 2px;
+  background-color: #4CAF50;
+  color: #4CAF50;
+  animation: dot-elastic 1s infinite linear;
+  top: 10px;
+}
+.dot-elastic::before, .dot-elastic::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  /* top: 10px; */
+}
+.dot-elastic::before {
+  left: 10px;
+  width: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #4CAF50;
+  color: #4CAF50;
+  animation: dot-elastic-before 1s infinite linear;
+  /* border: 1px solid red; */
+}
+.dot-elastic::after {
+  left: 22px;
+  width: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: #4CAF50;
+  color: #4CAF50;
+  animation: dot-elastic-after 1s infinite linear;
+  /* border: 1px solid red; */
+
+}
+
+@keyframes dot-elastic-before {
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1.5);
+  }
+  50% {
+    transform: scale(1, 0.67);
+  }
+  75% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+@keyframes dot-elastic {
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1, 1.5);
+  }
+  75% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+@keyframes dot-elastic-after {
+  0% {
+    transform: scale(1, 1);
+  }
+  25% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1, 0.67);
+  }
+  75% {
+    transform: scale(1, 1.5);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+    </style>
+</head>
+<body>
+   <!-- Add this code to your website's HTML where you want the widget to appear -->
+<div id="chatbot-widget">
+  <div id="chatbot-button" onclick="openChat()">
+    <span class="material-icons">chat</span>
+  </div>
+  <div id="chatbot-popup">
+    <div id="chatbot-header">
+      <h2>Chatbot</h2>
+      <span class="material-icons" onclick="closeChat()">close</span>
+    </div>
+    <div id="chatbot-messages">
+      <!-- Chatbot messages will be dynamically added here -->
+    </div>
+    <div id="chatbot-input">
+      <input type="text" id="user-input" placeholder="Type your message..." />
+      <span class="material-icons" onclick="sendMessage()">send</span>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
+<script>
+    // Add this code to your website's JavaScript or in a separate script file
+function openChat() {
+  document.getElementById("chatbot-popup").style.display = "block";
+  document.getElementById("chatbot-button").style.display = "none";
+}
+
+function closeChat() {
+  document.getElementById("chatbot-popup").style.display = "none";
+  document.getElementById("chatbot-button").style.display = "block";
+}
+
+function sendMessage() {
+  var userInput = document.getElementById("user-input").value;
+  document.getElementById("user-input").value = "";
+  
+  // Display user's message in the chat window
+  displayMessage(userInput, "user");
+  showLoadingDots();
+  // Call the backend API or process the user's input here
+  // You can use AJAX, fetch(), or any other method to send the user's input to the server and receive the response
+  
+  // Example response from the chatbot
+  var botResponse = "This is the chatbot's response.";
+  
+  // Display the chatbot's response in the chat window after a delay (simulating API response time)
+  setTimeout(function() {
+    hideLoadingDots();
+    displayMessage(botResponse, "bot");
+  }, 2000);
+}
+
+function displayMessage(message, sender) {
+  var chatWindow = document.getElementById("chatbot-messages");
+  
+  var messageElement = document.createElement("div");
+  messageElement.classList.add("message-" + sender);
+  messageElement.innerHTML = message;
+  
+  chatWindow.appendChild(messageElement);
+  
+  // Scroll to the bottom of the chat window to show the latest message
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+function showLoadingDots() {
+  var chatWindow = document.getElementById("chatbot-messages");
+  
+  var loadingDots = document.createElement("div");
+  loadingDots.classList.add("dot-elastic");
+
+  
+  chatWindow.appendChild(loadingDots);
+  
+  // Scroll to the bottom of the chat window to show the loading dots
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function hideLoadingDots() {
+  var chatWindow = document.getElementById("chatbot-messages");
+  
+  var loadingDots = document.getElementsByClassName("dot-elastic");
+    while(loadingDots.length > 0){
+        loadingDots[0].parentNode.removeChild(loadingDots[0]);
+    }
+  
+}
+
+</script>
